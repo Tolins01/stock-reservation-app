@@ -1,0 +1,66 @@
+
+│
+├── /
+│   │
+│   ├── config/
+│   │   ├── db.js
+│   │   └── env.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── productController.js
+│   │   ├── inventoryController.js
+│   │   └── reservationController.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   ├── Inventory.js
+│   │   └── Reservation.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── productRoutes.js
+│   │   ├── inventoryRoutes.js
+│   │   └── reservationRoutes.js
+│   │
+│   ├── services/
+│   │   ├── authService.js
+│   │   ├── productService.js
+│   │   ├── inventoryService.js
+│   │   └── reservationService.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── errorMiddleware.js
+│   │   └── validationMiddleware.js
+│   │
+│   ├── validators/
+│   │   ├── authValidator.js
+│   │   ├── productValidator.js
+│   │   └── reservationValidator.js
+│   │
+│   ├── utils/
+│   │   ├── generateToken.js
+│   │   ├── asyncHandler.js
+│   │   └── apiResponse.js
+│   │
+│   ├── constants/
+│   │   ├── roles.js
+│   │   └── reservationStatus.js
+│   │
+│   ├── app.js
+│   └── server.js
+│
+├── tests/
+│   ├── auth.test.js
+│   ├── product.test.js
+│   ├── inventory.test.js
+│   └── reservation.test.js
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── README.md
+└── nodemon.json
