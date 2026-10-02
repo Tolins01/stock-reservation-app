@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Reservation Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">◇</div>
+        <div>
+          <strong>Stock Reservation</strong>
+          <span>Service</span>
+        </div>
+      </div>
+
+      <nav class="navigation">
+        <button class="nav-link active">
+          <span class="nav-icon">⌂</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-link">
+          <span class="nav-icon">🛒</span>
+          <span>Reservations</span>
+        </button>
+        <button class="nav-link">
+          <span class="nav-icon">⊙</span>
+          <span>Inventory</span>
+        </button>
+        <button class="nav-link">
+          <span class="nav-icon">🛒</span>
+          <span>Orders</span>
+        </button>
+        <button class="nav-link">
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="footer-symbol">◒</span>
+        <p>Keep your stock<br>available, always.</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+
+        <div class="search">
+          <span>⌕</span>
+          <input type="text" placeholder="Search orders, products, or reservations..." id="searchInput">
+        </div>
+
+        <button class="notification" aria-label="Notifications">
+          ♧
+          <i></i>
+        </button>
+
+        <button class="user-menu">
+          <span class="avatar">VI</span>
+          <span class="user-name">Victor Ilori</span>
+          <span class="arrow">⌄</span>
+        </button>
+      </header>
+
+      <main class="content">
+        <section class="welcome">
+          <h1>Welcome back, Victor <span>👋</span></h1>
+          <p>Manage stock reservations, track orders, and keep your inventory accurate.</p>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="left-column">
+
+            <div class="stats">
+              <article class="stat-card">
+                <div class="stat-icon inventory">◈</div>
+                <p>Total Inventory</p>
+                <strong>1,248</strong>
+                <small>↑ 5% vs last week</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-icon reservations">◷</div>
+                <p>Active Reservations</p>
+                <strong>86</strong>
+                <small>↑ 12% vs last week</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-icon orders">🛒</div>
+                <p>Orders Today</p>
+                <strong>32</strong>
+                <small>↑ 8% vs last week</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-icon expired">◷</div>
+                <p>Expired (Released)</p>
+                <strong>7</strong>
+                <small>↓ 42% vs last week</small>
+              </article>
+            </div>
+
+            <section class="card reservations-card">
+              <div class="card-heading">
+                <h2>Recent Reservations</h2>
+                <button class="view-all">View all →</button>
+              </div>
+
+              <div class="table-wrapper">
+                <table id="reservationsTable">
+                  <thead>
+                    <tr>
+                      <th>Reservation ID</th>
+                      <th>Order ID</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Status</th>
+                      <th>Expires At</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>RES-0010</td>
+                      <td>ORD-1005</td>
+                      <td>Laptop Sleeve</td>
+                      <td>5</td>
+                      <td><span class="status active">Active</span></td>
+                      <td>Oct 3, 2026 14:32</td>
+                      <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                      <td>RES-0009</td>
+                      <td>ORD-1004</td>
+                      <td>Wireless Mouse</td>
+                      <td>10</td>
+                      <td><span class="status active">Active</span></td>
+                      <td>Oct 3, 2026 12:20</td>
+                      <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                      <td>RES-0008</td>
+                      <td>ORD-1003</td>
+                      <td>Keyboard</td>
+                      <td>5</td>
+                      <td><span class="status active">Active</span></td>
+                      <td>Oct 3, 2026 11:05</td>
+                      <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                      <td>RES-0007</td>
+                      <td>ORD-1002</td>
+                      <td>Monitor 24"</td>
+                      <td>2</td>
+                      <td><span class="status active">Active</span></td>
+                      <td>Oct 3, 2026 10:33</td>
+                      <td><button class="view-button">View</button></td>
+                    </tr>
+                    <tr>
+                      <td>RES-0006</td>
+                      <td>ORD-1001</td>
+                      <td>USB-C Cable</td>
+                      <td>20</td>
+                      <td><span class="status expired">Expired</span></td>
+                      <td>Oct 2, 2026 18:45</td>
+                      <td><button class="view-button">View</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <aside class="right-column">
+            <section class="card quick-actions">
+              <div class="side-heading">
+                <span class="heading-icon green-icon">◈</span>
+                <h2>Quick Actions</h2>
+              </div>
+
+              <button class="quick primary" id="createReservation">
+                <span>＋</span> Create Reservation
+              </button>
+
+              <button class="quick">
+                <span>◈</span> Manage Inventory
+              </button>
+
+              <button class="quick">
+                <span>🛒</span> View Orders
+              </button>
+            </section>
+
+            <section class="card activity">
+              <div class="side-heading">
+                <span class="heading-icon">◉</span>
+                <h2>Recent Activity</h2>
+              </div>
+
+              <div class="activity-list">
+                <div class="activity-item">
+                  <span class="dot green-dot"></span>
+                  <div>
+                    <strong>Reservation created</strong>
+                    <small>RES-0010 – ORD-1005</small>
+                  </div>
+                  <time>2m ago</time>
+                </div>
+
+                <div class="activity-item">
+                  <span class="dot green-dot"></span>
+                  <div>
+                    <strong>Reservation created</strong>
+                    <small>RES-0008 – ORD-1004</small>
+                  </div>
+                  <time>12m ago</time>
+                </div>
+
+                <div class="activity-item">
+                  <span class="dot blue-dot"></span>
+                  <div>
+                    <strong>Reservation released</strong>
+                    <small>RES-0005 – ORD-0998</small>
+                  </div>
+                  <time>1h ago</time>
+                </div>
+
+                <div class="activity-item">
+                  <span class="dot red-dot"></span>
+                  <div>
+                    <strong>Reservation expired</strong>
+                    <small>RES-0006 – ORD-1001</small>
+                  </div>
+                  <time>2h ago</time>
+                </div>
+
+                <div class="activity-item">
+                  <span class="dot green-dot"></span>
+                  <div>
+                    <strong>Order received</strong>
+                    <small>ORD-1005</small>
+                  </div>
+                  <time>3h ago</time>
+                </div>
+              </div>
+            </section>
+
+            <section class="how-it-works">
+              <div class="how-heading">
+                <span>ⓘ</span>
+                <h2>How it works</h2>
+              </div>
+              <p>
+                When an order is placed, the requested stock is reserved for a limited time.
+                If the order is not completed, the reserved stock is released back to inventory automatically.
+              </p>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
