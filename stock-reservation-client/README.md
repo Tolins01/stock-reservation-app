@@ -1,16 +1,50 @@
-# React + Vite
+# Stock Reservation Service — React MVP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A runnable React/Vite/Tailwind frontend for the Stock Reservation Service UI.
 
-Currently, two official plugins are available:
+## Included
+- Dashboard
+- Reservations
+- Reservation details
+- Inventory
+- Orders
+- Modal Examples: Create, Release, Confirm, Release Expired
+- Settings
+- Responsive layout and reusable components
+- Mock data ready to replace with your Express API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run
+1. Install Node.js 18+ (20+ recommended).
+2. Open this folder in VS Code.
+3. Run:
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Then open the URL shown by Vite, normally `http://localhost:5173`.
 
-## Expanding the ESLint configuration
+## Build
+```bash
+npm run build
+npm run preview
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Suggested API integration
+```text
+GET  /api/inventory
+GET  /api/products
+GET  /api/orders
+GET  /api/reservations
+GET  /api/reservations/:id
+POST /api/reservations
+POST /api/reservations/:id/release
+POST /api/orders/:id/confirm
+POST /api/reservations/release-expired
+```
+
+Replace the data in `src/data/mockData.js` with calls to your backend when the API is ready.
+
+## Reservation lifecycle
+Create reservation → stock becomes reserved → confirm order OR release manually → expired reservations are automatically released.
