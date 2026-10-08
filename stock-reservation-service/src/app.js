@@ -1,21 +1,27 @@
-import express from "express";import cors from "cors";import inventoryRoutes from "./routes/inventoryRoutes.js";import orderRoutes from "./routes/orderRoutes.js";import reservationRoutes from "./routes/reservationRoutes.js";import {notFound,errorHandler} from "./middleware/errorMiddleware.js";
+import express from "express";
+import cors from "cors";
+import inventoryRoutes from "./routes/inventoryRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import reservationRoutes from "./routes/reservationRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+import { protect } from "./middleware/authMiddleware.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
-
-const app=express();app.use(cors({origin:process.env.CLIENT_URL||"http://localhost:5173"}));
-app.use(express.json());
-app.use("/api/inventory",inventoryRoutes);
-app.use("/api/orders",orderRoutes);
-app.use("/api/reservations",reservationRoutes);
+const app=express();
+const allowedOrigin=process.env.CLIENT_URL||"http://localhost:5173";
+app.use(cors({origin:allowedOrigin,credentials:true}));
+app.use(express.json({limit:"1mb"}));
+app.get("/api/health",(req,res)=>res.json({success:true,service:"stock-reservation-server",status:"healthy",timestamp:new Date().toISOString()}));
+app.use("/api/auth",authRoutes);
+app.use("/api/dashboard",dashboardRoutes);
+app.use("/api/users",userRoutes);
+app.use("/api/notifications",notificationRoutes);
+app.use("/api/inventory",protect,inventoryRoutes);
+app.use("/api/orders",protect,orderRoutes);
+app.use("/api/reservations",protect,reservationRoutes);
 app.use(notFound);
 app.use(errorHandler);
-
-app.get("/api/health",(req,res)=>res.json({
-    success:true,service:"stock-reservation-server",
-    status:"healthy",timestamp:new Date().toISOString()}
-));
-
-   
-    
-    
-    
 export default app;

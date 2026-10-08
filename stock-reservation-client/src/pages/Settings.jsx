@@ -1,12 +1,3 @@
-export default function Settings(){return <div className="space-y-6">
-    <div><h1 className="text-3xl font-bold">
-    Settings</h1>
-    <p className="text-slate-500">Configure reservation behavior.</p>
-    </div><div className="card max-w-3xl p-6 space-y-6">
-        <label className="block text-sm font-medium">Default reservation duration
-            <input className="input mt-1" value="24 hours" readOnly/>
-            </label><label className="block text-sm font-medium">Expiration check interval<input className="input mt-1" value="5 minutes" readOnly/>
-            </label><label className="flex gap-3 text-sm"><input type="checkbox" defaultChecked/> Notify when reservations expire</label>
-            </div>
-            </div>
-    }
+import { useState } from "react";
+import { useAuth } from "../auth/AuthContext";
+export default function Settings(){const {user,updateProfile}=useAuth();const [name,setName]=useState(user?.name||"");const [message,setMessage]=useState("");const [error,setError]=useState("");const [saving,setSaving]=useState(false);async function save(e){e.preventDefault();setSaving(true);setMessage("");setError("");try{await updateProfile({name});setMessage("Profile updated successfully.")}catch(e){setError(e.message)}finally{setSaving(false)}}return <div className="space-y-6"><div><h1 className="text-3xl font-bold">Settings</h1><p className="text-slate-500">Manage your profile and application preferences.</p></div><form onSubmit={save} className="card max-w-3xl space-y-6 p-6"><div><h2 className="font-bold">Profile</h2><p className="mt-1 text-sm text-slate-500">These details are loaded from your account.</p></div>{message&&<div className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">{message}</div>}{error&&<div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</div>}<label className="block text-sm font-medium">Full name<input className="input mt-1" value={name} onChange={e=>setName(e.target.value)}/></label><label className="block text-sm font-medium">Email<input className="input mt-1 bg-slate-50" value={user?.email||""} readOnly/></label><label className="block text-sm font-medium">Role<input className="input mt-1 bg-slate-50 capitalize" value={user?.role||""} readOnly/></label><button className="btn-primary" disabled={saving}>{saving?"Saving…":"Save profile"}</button></form></div>}
