@@ -1,3 +1,5 @@
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger.js";
 import express from "express";
 import cors from "cors";
 import inventoryRoutes from "./routes/inventoryRoutes.js";
@@ -23,6 +25,8 @@ app.use(cors({
 }));
 
 app.use(express.json({ limit: "1mb" }));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(cors({
   origin: allowedOrigins,
