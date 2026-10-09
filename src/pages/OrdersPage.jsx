@@ -31,49 +31,11 @@ const OrdersPage = () => {
   return (
     <div className="flex min-h-screen bg-slate-50 font-sans">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#033625] text-white flex flex-col justify-between min-h-screen p-5 flex-shrink-0">
-        <div>
-          <div className="flex items-center gap-3 mb-8 px-2">
-            <div className="p-2 border border-emerald-500/40 rounded-lg bg-emerald-950/40">
-              <Box className="w-6 h-6 text-emerald-400" />
-            </div>
-            <div>
-              <h1 className="font-bold text-sm leading-tight">Stock Reservation</h1>
-              <span className="text-xs text-emerald-300/70">Service</span>
-            </div>
-          </div>
-          <nav className="space-y-1">
-            <NavLink to="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-emerald-100/70 hover:bg-[#0b4230]"><LayoutDashboard className="w-5 h-5"/>Dashboard</NavLink>
-            <NavLink to="/reservations" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-emerald-100/70 hover:bg-[#0b4230]"><ShoppingCart className="w-5 h-5"/>Reservations</NavLink>
-            <NavLink to="/inventory" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-emerald-100/70 hover:bg-[#0b4230]"><Package className="w-5 h-5"/>Inventory</NavLink>
-            <NavLink to="/orders" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#154d39] text-white"><ListOrdered className="w-5 h-5"/>Orders</NavLink>
-            <NavLink to="/settings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-emerald-100/70 hover:bg-[#0b4230]"><Settings className="w-5 h-5"/>Settings</NavLink>
-          </nav>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-emerald-300/60 px-2 py-4 border-t border-emerald-900/50">
-          <Leaf className="w-4 h-4 text-emerald-400" />
-          <span>Keep your stock available, always.</span>
-        </div>
-      </aside>
-
+      
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100">
-          <div className="relative w-96">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input type="text" placeholder="Search orders..." className="w-full pl-9 pr-4 py-2 bg-gray-50 text-sm border border-gray-100 rounded-lg focus:outline-none" />
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="p-2 text-gray-400 hover:text-gray-600"><Bell className="w-5 h-5"/></button>
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#033625] text-emerald-300 flex items-center justify-center font-bold text-xs">VI</div>
-              <span className="text-sm font-medium text-gray-700">Victor Ilori</span>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
-            </div>
-          </div>
-        </header>
-
+        
         {/* Content Area */}
         <main className="p-8 flex-1">
           <div className="flex items-center justify-between mb-6">
