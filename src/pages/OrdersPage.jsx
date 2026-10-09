@@ -113,10 +113,10 @@ const OrdersPage = () => {
                     <td className="py-4 px-6 text-slate-800 font-medium">{order.customer}</td>
                     <td className="py-4 px-6 text-slate-500">{order.items}</td>
                     <td className="py-4 px-6">
-                      <span className={px-3 py-1 rounded-full text-xs font-medium inline-block ${getBadgeStyle(order.resStatus)}}>{order.resStatus}</span>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium inline-block ${getBadgeStyle(order.resStatus)}`}>{order.resStatus}</span>
                     </td>
                     <td className="py-4 px-6">
-                      <span className={px-3 py-1 rounded-full text-xs font-medium inline-block ${getBadgeStyle(order.orderStatus)}}>{order.orderStatus}</span>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium inline-block ${getBadgeStyle(order.orderStatus)}`}>{order.orderStatus}</span>
                     </td>
                     <td className="py-4 px-6 text-slate-500 text-xs">{order.createdAt}</td>
                     <td className="py-4 px-6 text-right">
