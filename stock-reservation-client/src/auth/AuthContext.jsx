@@ -1,6 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const configuredApiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = configuredApiUrl.replace(/\/$/, "").endsWith("/api")
+  ? configuredApiUrl.replace(/\/$/, "")
+  : `${configuredApiUrl.replace(/\/$/, "")}/api`;
 const STORAGE_KEY = "stock_reservation_auth";
 const CACHE_PREFIX = "stock_reservation_cache:";
 const AuthContext = createContext(null);
@@ -33,7 +36,8 @@ export function AuthProvider({ children }) {
 
   const apiRequest = useCallback(async (path, options = {}) => {
     const method = (options.method || "GET").toUpperCase();
-    const cacheKey = `${CACHE_PREFIX}${method}:${path}`;
+    const cacheOwner = auth.user?.id || auth.user?._id || "anonymous";
+    const cacheKey = `${CACHE_PREFIX}${cacheOwner}:${method}:${path}`;
     const headers = {
       ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
       ...(options.headers || {}),
@@ -133,6 +137,11 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
+    try {
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith(CACHE_PREFIX))
+        .forEach((key) => localStorage.removeItem(key));
+    } catch {}
     setAuth({ user: null, token: null });
     setOffline(false);
   }

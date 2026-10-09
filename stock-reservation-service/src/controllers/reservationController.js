@@ -1,9 +1,10 @@
 import Reservation from "../models/Reservation.js";
 import { createReservation, releaseReservation, releaseExpiredReservations } from "../services/reservationService.js";
 import { notify } from "../services/notificationService.js";
+import { ownedFilter, canAccessOwnedDocument } from "../utils/ownership.js";
 
 export async function getReservations(req, res) {
-  const filter = {};
+  const filter = { ...ownedFilter(req.user) };
   if (req.query.status) filter.status = req.query.status;
   const data = await Reservation.find(filter).populate("order").sort({ createdAt: -1 });
   res.json({ success: true, count: data.length, data });
@@ -12,11 +13,12 @@ export async function getReservations(req, res) {
 export async function getReservation(req, res) {
   const data = await Reservation.findById(req.params.id).populate("order");
   if (!data) return res.status(404).json({ success: false, message: "Reservation not found" });
+  if (!canAccessOwnedDocument(data, req.user)) return res.status(403).json({ success: false, message: "You are not authorized to access this reservation" });
   res.json({ success: true, data });
 }
 
 export async function createReservationController(req, res) {
-  const data = await createReservation(req.body);
+  const data = await createReservation(req.body, req.user);
   await notify(req.user, { type: "success", title: "Reservation created", message: `${data.reservationNumber} is active until ${new Date(data.expiresAt).toLocaleString()}.` });
   res.status(201).json({ success: true, message: "Reservation created successfully", data });
 }
@@ -24,6 +26,7 @@ export async function createReservationController(req, res) {
 export async function updateReservationController(req, res) {
   const reservation = await Reservation.findById(req.params.id);
   if (!reservation) return res.status(404).json({ success: false, message: "Reservation not found" });
+  if (!canAccessOwnedDocument(reservation, req.user)) return res.status(403).json({ success: false, message: "You are not authorized to modify this reservation" });
   if (reservation.status !== "Active") return res.status(409).json({ success: false, message: "Only active reservations can be edited" });
 
   const expiresAt = new Date(req.body.expiresAt);
@@ -38,14 +41,16 @@ export async function updateReservationController(req, res) {
 export async function deleteReservationController(req, res) {
   const reservation = await Reservation.findById(req.params.id);
   if (!reservation) return res.status(404).json({ success: false, message: "Reservation not found" });
+  if (!canAccessOwnedDocument(reservation, req.user)) return res.status(403).json({ success: false, message: "You are not authorized to delete this reservation" });
   if (reservation.status === "Active")
     return res.status(409).json({ success: false, message: "Release the active reservation before deleting it" });
+
   await reservation.deleteOne();
   res.json({ success: true, message: "Reservation deleted" });
 }
 
 export async function releaseReservationController(req, res) {
-  const data = await releaseReservation(req.params.id);
+  const data = await releaseReservation(req.params.id, "Released", req.user);
   await notify(req.user, { type: "info", title: "Reservation released", message: `${data.reservationNumber} released the reserved stock.` });
   res.json({ success: true, message: "Reservation released and stock returned", data });
 }

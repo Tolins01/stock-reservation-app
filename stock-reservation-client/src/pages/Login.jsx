@@ -12,7 +12,7 @@ export default function Login() {
 
   async function submit(e) {
     e.preventDefault(); setError(""); setLoading(true);
-    try { await login(form); navigate(location.state?.from?.pathname || "/", { replace: true }); }
+    try { await login(form); navigate(location.state?.from?.pathname || "/dashboard", { replace: true }); }
     catch (err) { setError(err.message); }
     finally { setLoading(false); }
   }

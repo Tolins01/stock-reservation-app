@@ -4,9 +4,10 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "dev": "node --watch src/server.js",
+    "dev": "node src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/seed.js"
+    "seed": "node src/seed.js",
+    "migrate:ownership": "node src/scripts/backfillOwnership.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

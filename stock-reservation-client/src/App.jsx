@@ -16,18 +16,20 @@ import ReservationDetails from "./pages/ReservationDetails";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
+import Landing from "./pages/Landing";
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/orders/new" element={<CreateOrder />} />

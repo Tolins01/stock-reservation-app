@@ -9,7 +9,7 @@ export default function Register() {
   async function submit(e) { e.preventDefault(); setError(""); 
     if(form.password!==form.confirmPassword) 
     return setError("Passwords do not match"); setLoading(true); 
-    try { await register({name:form.name,email:form.email,password:form.password}); navigate("/",{replace:true}); }  
+    try { await register({name:form.name,email:form.email,password:form.password}); navigate("/dashboard",{replace:true}); }  
     catch(err){setError(err.message)} finally{setLoading(false)} }
      return <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
       <form onSubmit={submit} className="w-full max-w-md rounded-2xl bg-white border border-slate-200 p-8 shadow-sm">

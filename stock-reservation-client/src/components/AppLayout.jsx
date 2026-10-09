@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Package, ShoppingCart, CalendarClock, Bell, Users,
-  Settings, LogOut, Menu, X, PlusCircle, UserPlus
+  Settings, LogOut, Menu, X, PlusCircle
 } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -12,7 +12,7 @@ export default function AppLayout() {
   const navigate = useNavigate();
 
   const navigation = [
-    ["Dashboard", "/", LayoutDashboard],
+    ["Dashboard", "/dashboard", LayoutDashboard],
     ["Inventory", "/inventory", Package],
     ["Orders", "/orders", ShoppingCart],
     ["New Order", "/orders/new", PlusCircle],
@@ -25,8 +25,6 @@ export default function AppLayout() {
   if (user?.role === "admin" || user?.role === "manager") {
     navigation.push(["Users", "/users", Users]);
   }
-  // Public account pages are included here so every app page remains discoverable.
-  navigation.push(["Sign-up", "/register", UserPlus]);
 
   return (
     <div className="min-h-screen bg-slate-50">
