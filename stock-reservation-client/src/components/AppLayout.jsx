@@ -11,10 +11,9 @@ export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     let active = true;
-
     const loadUnreadCount = async () => {
       try {
         const response = await apiRequest("/notifications?limit=1");
