@@ -59,11 +59,13 @@ export default function AppLayout() {
 
       <aside className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:translate-x-0 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-16 items-center border-b border-slate-200 px-6">
-          <div>
+          <button onClick={() => navigate("/")} className="flex items-center gap-3 font-bold text-slate-900">
+            <div>
             <h1 className="font-bold text-slate-900">Stock Reservation</h1>
             <p className="text-xs text-slate-500">Inventory Management</p>
           </div>
-        </div>
+          </button>
+          </div>
 
         {offline && (
           <div className="mx-3 mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
@@ -101,9 +103,13 @@ export default function AppLayout() {
 
         <div className="border-t border-slate-200 p-4">
           <div className="mb-3 flex items-center gap-3">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white">
+            <button onClick={() => navigate("/settings")} className="flex items-center gap-3 font-bold text-slate-900">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white">
               {getInitials(user?.name)}
             </div>
+            </button>
+            
+
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-slate-900">{user?.name || "User"}</p>
               <p className="truncate text-xs text-slate-500">{user?.email || ""}</p>
