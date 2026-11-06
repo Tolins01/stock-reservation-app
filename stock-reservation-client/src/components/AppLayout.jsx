@@ -72,8 +72,8 @@ export default function AppLayout() {
             onClick={() => navigate("/landing")}
             className="text-left"
           >
-            <h1 className="font-bold text-slate-900">Stock Reservation</h1>
-            <p className="text-xs text-slate-500">Inventory Management</p>
+            <span className="block font-bold text-slate-900">Stock Reservation</span>
+            <span className="block text-xs text-slate-500">Inventory Management</span>
           </button>
         </div>
 
