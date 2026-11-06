@@ -3,13 +3,36 @@ import {
   Settings, LogOut, Menu, X, PlusCircle
 } from "lucide-react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 
 export default function AppLayout() {
-  const { user, logout, offline } = useAuth();
+  const { user, logout, offline, apiRequest } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let active = true;
+
+    const loadUnreadCount = async () => {
+      try {
+        const response = await apiRequest("/notifications?limit=1");
+        if (active) setUnreadCount(response.unreadCount || 0);
+      } catch {
+        // Avoid showing a stale or misleading badge when the count cannot be loaded.
+        if (active) setUnreadCount(0);
+      }
+    };
+
+    loadUnreadCount();
+    const intervalId = setInterval(loadUnreadCount, 30000);
+
+    return () => {
+      active = false;
+      clearInterval(intervalId);
+    };
+  }, [apiRequest]);
 
   const navigation = [
     ["Dashboard", "/dashboard", LayoutDashboard],
@@ -30,7 +53,7 @@ export default function AppLayout() {
     <div className="min-h-screen bg-slate-50">
       <header className="fixed left-0 right-0 top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 lg:hidden">
         <button onClick={() => navigate("/")} className="font-bold text-slate-900">Stock Reservation</button>
-        <button onClick={() => setMobileOpen((v) => !v)} className="rounded-lg p-2 hover:bg-slate-100" aria-label="Open menu">
+        <button onClick={() => setMobileOpen((v) => !v)} className="rounded-lg p-2 hover:bg-slate-100" aria-label={mobileOpen ? "Close menu" : "Open menu"}>
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </header>
@@ -54,17 +77,24 @@ export default function AppLayout() {
             <NavLink
               key={path}
               to={path}
+              end
               onClick={() => setMobileOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                  isActive ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  isActive ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 }`
               }
             >
               <Icon size={18} />
               <span>{name}</span>
-              {name === "Notifications" && (
-                <span className="ml-auto rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">•</span>
+              {name === "Notifications" && unreadCount > 0 && (
+                <span
+                  className="ml-auto grid min-h-5 min-w-5 place-items-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white"
+                  aria-label={`${unreadCount} unread notifications`}
+                  title={`${unreadCount} unread notifications`}
+                >
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
               )}
             </NavLink>
           ))}
