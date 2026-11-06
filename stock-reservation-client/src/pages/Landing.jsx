@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  ArrowRight, BarChart3, Boxes, CheckCircle2, ChevronDown, Clock3,
+  ArrowRight, BarChart3, Boxes, CheckCircle2, Clock3,
   LockKeyhole, Menu, PackageCheck, ShieldCheck, Sparkles, Truck, X
 } from "lucide-react";
 import { Link } from "react-router-dom";
