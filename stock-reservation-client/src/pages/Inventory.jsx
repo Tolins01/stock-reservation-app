@@ -38,10 +38,10 @@ export default function Inventory() {
     e.preventDefault(); setSaving(true); setError("");
     try {
       const totalStock = Number(form.totalStock);
-      const minimumStock = Number(form.reservedStock || 0);
+      const existingItem = editing === "new" ? null : items.find((item) => item._id === editing);
+      const minimumStock = existingItem?.reservedStock || 0;
       if (!Number.isInteger(totalStock) || totalStock < minimumStock) {
         setError(`Enter a whole-number stock quantity of at least ${minimumStock}.`);
-        setSaving(false);
         return;
       }
       const payload = { ...form, totalStock };
