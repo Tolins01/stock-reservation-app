@@ -59,10 +59,11 @@ export default function AppLayout() {
 
       <aside className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:translate-x-0 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-16 items-center border-b border-slate-200 px-6">
-          <button onClick={() => navigate("/")} className="flex items-center gap-3 font-bold text-slate-900">
-            <div>
+          <div>
+            <button onClick={() => navigate("/landing")} className="font-bold text-slate-900">
             <h1 className="font-bold text-slate-900">Stock Reservation</h1>
             <p className="text-xs text-slate-500">Inventory Management</p>
+            </button>
           </div>
           </button>
           </div>
@@ -103,9 +104,10 @@ export default function AppLayout() {
 
         <div className="border-t border-slate-200 p-4">
           <div className="mb-3 flex items-center gap-3">
-            <button onClick={() => navigate("/settings")} className="flex items-center gap-3 font-bold text-slate-900">
-              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white">
-              {getInitials(user?.name)}
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white">
+              <button onClick={() => navigate("/settings")} className="w-full h-full flex items-center justify-center">
+                {getInitials(user?.name)}
+              </button> 
             </div>
             </button>
             

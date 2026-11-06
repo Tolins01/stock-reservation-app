@@ -37,7 +37,14 @@ export default function Inventory() {
   async function save(e) {
     e.preventDefault(); setSaving(true); setError("");
     try {
-      const payload = { ...form, totalStock: Number(form.totalStock) };
+      const totalStock = Number(form.totalStock);
+      const minimumStock = Number(form.reservedStock || 0);
+      if (!Number.isInteger(totalStock) || totalStock < minimumStock) {
+        setError(`Enter a whole-number stock quantity of at least ${minimumStock}.`);
+        setSaving(false);
+        return;
+      }
+      const payload = { ...form, totalStock };
       if (editing === "new") await apiRequest("/inventory", { method: "POST", body: JSON.stringify(payload) });
       else await apiRequest(`/inventory/${editing}`, { method: "PATCH", body: JSON.stringify(payload) });
       setEditing(null); await load();
@@ -92,7 +99,7 @@ export default function Inventory() {
             <div className="space-y-4">
               <label className="block text-sm font-medium">Product name<input className="input mt-1" value={form.name} onChange={(e) => setForm({...form, name:e.target.value})} required/></label>
               <label className="block text-sm font-medium">SKU<input className="input mt-1" value={form.sku} onChange={(e) => setForm({...form, sku:e.target.value.toUpperCase()})} required/></label>
-              <label className="block text-sm font-medium">Total stock<input className="input mt-1" type="number" min={form.reservedStock || 0} value={form.totalStock} onChange={(e) => setForm({...form, totalStock:e.target.value})} required/></label>
+              <label className="block text-sm font-medium">Total stock<input className="input mt-1" type="text" inputMode="numeric" pattern="[0-9]+" autoComplete="off" placeholder="0" value={form.totalStock} onChange={(e) => setForm({...form, totalStock:e.target.value})} required/></label>
             </div>
             <div className="mt-6 flex justify-end gap-2"><button type="button" className="btn-secondary" onClick={() => setEditing(null)}>Cancel</button><button className="btn-primary" disabled={saving}>{saving ? "Saving…" : "Save changes"}</button></div>
           </form>
