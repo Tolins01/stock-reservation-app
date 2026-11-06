@@ -11,15 +11,15 @@ export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     let active = true;
+
     const loadUnreadCount = async () => {
       try {
         const response = await apiRequest("/notifications?limit=1");
         if (active) setUnreadCount(response.unreadCount || 0);
       } catch {
-        // Avoid showing a stale or misleading badge when the count cannot be loaded.
         if (active) setUnreadCount(0);
       }
     };
@@ -51,22 +51,31 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="fixed left-0 right-0 top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 lg:hidden">
-        <button onClick={() => navigate("/")} className="font-bold text-slate-900">Stock Reservation</button>
-        <button onClick={() => setMobileOpen((v) => !v)} className="rounded-lg p-2 hover:bg-slate-100" aria-label={mobileOpen ? "Close menu" : "Open menu"}>
+        <button type="button" onClick={() => navigate("/")} className="font-bold text-slate-900">
+          Stock Reservation
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileOpen((open) => !open)}
+          className="rounded-lg p-2 hover:bg-slate-100"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+        >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </header>
 
       <aside className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:translate-x-0 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-16 items-center border-b border-slate-200 px-6">
-          <div>
-            <button onClick={() => navigate("/landing")} className="font-bold text-slate-900">
+          <button
+            type="button"
+            onClick={() => navigate("/landing")}
+            className="text-left"
+          >
             <h1 className="font-bold text-slate-900">Stock Reservation</h1>
             <p className="text-xs text-slate-500">Inventory Management</p>
-            </button>
-          </div>
           </button>
-          </div>
+        </div>
 
         {offline && (
           <div className="mx-3 mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
@@ -104,14 +113,14 @@ export default function AppLayout() {
 
         <div className="border-t border-slate-200 p-4">
           <div className="mb-3 flex items-center gap-3">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white">
-              <button onClick={() => navigate("/settings")} className="w-full h-full flex items-center justify-center">
-                {getInitials(user?.name)}
-              </button> 
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate("/settings")}
+              aria-label="Open profile settings"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 font-semibold text-white"
+            >
+              {getInitials(user?.name)}
             </button>
-            
-
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-slate-900">{user?.name || "User"}</p>
               <p className="truncate text-xs text-slate-500">{user?.email || ""}</p>
@@ -119,6 +128,7 @@ export default function AppLayout() {
             </div>
           </div>
           <button
+            type="button"
             onClick={() => { logout(); navigate("/login", { replace: true }); }}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50"
           >
@@ -127,7 +137,13 @@ export default function AppLayout() {
         </div>
       </aside>
 
-      {mobileOpen && <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 lg:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       <main className="min-h-screen lg:pl-64">
         <div className="px-4 pb-8 pt-20 sm:px-6 lg:px-8 lg:pt-8">
