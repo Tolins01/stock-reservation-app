@@ -11,10 +11,9 @@ export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     let active = true;
-
     const loadUnreadCount = async () => {
       try {
         const response = await apiRequest("/notifications?limit=1");
@@ -66,7 +65,8 @@ export default function AppLayout() {
             <p className="text-xs text-slate-500">Inventory Management</p>
             </button>
           </div>
-        </div>
+          </button>
+          </div>
 
         {offline && (
           <div className="mx-3 mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800">
@@ -109,6 +109,9 @@ export default function AppLayout() {
                 {getInitials(user?.name)}
               </button> 
             </div>
+            </button>
+            
+
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-slate-900">{user?.name || "User"}</p>
               <p className="truncate text-xs text-slate-500">{user?.email || ""}</p>
